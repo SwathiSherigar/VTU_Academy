@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos and Notes - {{ branch.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Added for icon -->
+    <style>
+        .navbar {
+            z-index: 1050;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+        }
+
+        .navbar .back-btn {
+            display: none;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .navbar .navbar-brand {
+            padding-left: 40px;
+            margin: 0;
+        }
+
+        .main-content {
+            margin-top: 70px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 250px;
+            width: 100%;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .btn-container {
+            margin-top: 10px;
+        }
+
+        /* Show back button on smaller devices (max-width: 767px) */
+        @media (max-width: 767px) {
+            .navbar .back-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Back Button with Icon for Mobile Only -->
+        <button class="back-btn d-block d-sm-none" onclick="window.history.back();">
+            <i class="bi bi-arrow-left"></i> <!-- Bootstrap Icon for Back -->
+        </button>
+
+        <div class="container-fluid">
+            <h3 class="navbar-brand ms-2">VTU Academy</h3>
+        </div>
+    </nav>
+
+    <div class="main-content container">
+        <h1 class="text-center mb-4">Videos and Notes for {{ branch.name }} - Semester {{ semester }} - Year {{ year }}</h1>
+
+        {% if videos_and_notes %}
+            <div class="row g-4">
+                {% for note in videos_and_notes %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            <!-- Carousel for Notes Images -->
+                            <div id="carousel-{{ note.id }}" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for image in note.notes_images.all %}
+                                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                            <img src="{{ image.image.url }}" class="d-block w-100" alt="Note Image">
+                                        </div>
+                                    {% empty %}
+                                        <div class="carousel-item active">
+                                            <img src="https://via.placeholder.com/400x250?text=No+Image" class="d-block w-100" alt="No Image">
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ note.id }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ note.id }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <h5 class="card-title">{{ note.title }}</h5>
+                                <div class="btn-container">
+                                    <a href="{{ note.video_url }}" class="btn btn-info" target="_blank">Watch Video</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">No notes available for the selected semester and year.</p>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

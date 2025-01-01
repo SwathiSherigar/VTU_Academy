@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VTU Academy - Select Year and Semester</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Reset default margins and padding */
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            z-index: 1050;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+        }
+
+        .navbar .back-btn {
+            display: none;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .navbar .navbar-brand {
+            padding-left: 40px;
+            margin: 0;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-top: 76px; /* navbar height (56px) + desired spacing (20px) */
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        /* Form element styles */
+        .form-select-lg {
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .navbar .back-btn {
+                display: block;
+            }
+
+            .form-container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Back Button with Icon for Mobile Only -->
+        <button class="back-btn d-block d-sm-none" onclick="window.history.back();">
+            <i class="bi bi-arrow-left"></i>
+        </button>
+
+        <div class="container-fluid">
+            <h3 class="navbar-brand ms-2">VTU Academy</h3>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="form-container">
+            <h2>Select Year & Semester</h2>
+            <form method="GET" action="/videos_notes/{{branch.slug}}/">
+                <!-- Year Selection -->
+                <div class="mb-4">
+                    <label for="year" class="form-label">Select Year</label>
+                    <select class="form-select form-select-lg" id="year" name="year">
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                </div>
+
+                <!-- Semester Selection -->
+                <div class="mb-4">
+                    <label for="semester" class="form-label">Select Semester</label>
+                    <select class="form-select form-select-lg" id="semester" name="semester">
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Get Videos and Notes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
